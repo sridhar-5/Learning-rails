@@ -485,7 +485,7 @@ methods in different ways for different objects or data types.
 MVC is a way of organizing code for maximum efficiency. It stands for Model, Viewer
 Controller
 
-![Screenshot 2023-01-23 at 12.48.02 PM.png](RUBY%20ON%20RAILS%20DOCS%203e04b1a1e9304fb4908ff015094f6e4d/Screenshot 2023-01-24 at 10.53.16 AM.png)
+![Screenshot 2023-01-23 at 12.48.02 PM.png](otherReadMeAssets/Screenshot%202023-01-24%20at%2010.53.16%20AM.png)
 
 The workflow goes like this :
 
