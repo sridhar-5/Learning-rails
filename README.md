@@ -478,3 +478,70 @@ b3.print_area
 or many form or shape.
 - Polymorphism in programming refers to the ability to use same
 methods in different ways for different objects or data types.
+
+
+## Intro to MVC ( Model View Controller)
+
+MVC is a way of organizing code for maximum efficiency. It stands for Model, Viewer
+Controller
+
+![Screenshot 2023-01-23 at 12.48.02 PM.png](RUBY ON RAILS DOCS 3e04b1a1e9304fb4908ff015094f6e4d/Screenshot 2023-01-24 at 10.53.16 AM.png)
+
+The workflow goes like this :
+
+- The **browser** makes a request, such as `http://mysite.com/video/show/15`
+- The **web server** (mongrel, WEBrick, etc.) receives the request. It uses **routes** to find out which controller to use: the default route pattern is `/controller/action/id` as defined in `config/routes.rb`. In our case, it’s the `video` controller, method `show`, with the id parameter set to `15`. The web server then uses the **dispatcher** to create a new controller, call the action and pass the parameters.
+- **Controllers** do the work of parsing user requests, data submissions, cookies, sessions and the “browser stuff”. They’re the pointy-haired manager that orders employees around. **The best controller is Dilbert-esque:** It gives orders without knowing (or caring) how it gets done. In our case, the show method in the video controller knows it needs to lookup a video. It asks the model to get video 15, and will eventually display it to the user.
+- **Models** are Ruby classes. They talk to the database, store and validate data, perform the business logic and otherwise do the heavy lifting. **They’re the chubby guy in the back room** crunching the numbers. In this case, the model retrieves video 15 from the database.
+- **Views** are what the user sees: HTML, CSS, XML, Javascript, JSON. They’re the sales rep putting up flyers and collecting surveys, at the manager’s direction. **Views are merely puppets** reading what the controller gives them. They don’t know what happens in the back room. In our example, the controller gives video 15 to the “show” view. The show view generates the HTML: divs, tables, text, descriptions, footers, etc.
+
+## Routing
+
+The router is the doorman of your application. When an HTTP request arrives from the user’s browser, it needs to know which controller action (method) should be run. The Router is basically just a matching service. It looks at the HTTP verb (GET, POST, PUT, DELETE) and the URL that is being requested and matches it with the appropriate controller action to run. It’s a pretty simple function but an essential one. If it can’t find a route that matches the request, your application will throw an error.
+
+### Root route:
+
+`root "posts#index"`    When we hit the base endpoint of any website what should be displayed to the user ([`http://supercutekittenphotos.com`](http://supercutekittenphotos.com/)  url without any specific route or endpoint) this is the root of any website and we have to set that first.
+
+### RESTful Routes
+
+The can mainly be 7 main actions we can perform on a resource.
+
+1. GET all the posts (aka **“index”** the posts)
+2. GET just one specific post (aka **“show”** that post)
+3. GET the page that lets you create a new post (aka view the **“new”** post page)
+4. POST the data you just filled out for a new post back to the server so it can create that post (aka **“create”** the post)
+5. GET the page that lets you edit an existing post (aka view the **“edit”** post page)
+6. PUT the data you just filled out to edit the post back to the server so it can actually perform the update (aka **“update”** the post)
+7. DELETE one specific post by sending a delete request to the server (aka **“destroy”** the post)
+
+the code that corresponds to each of the line is here
+```angular2html
+      get "/posts", to: "posts#index"
+      get "/posts/:id", to: "posts#show"
+      get "/posts/new", to: "posts#new"
+      post "/posts", to: "posts#create"  # usually a submitted form
+      get "/posts/:id/edit", to: "posts#edit"
+      put "/posts/:id", to: "posts#update" # usually a submitted form
+      delete "/posts/:id", to: "posts#destroy"
+```
+
+Ruby knows we use these methods very often so it has an even shorter way of doing these
+
+```angular2html
+    resources :posts
+```
+
+just one line and we can assume all the endpoints we’ve set up above can be imagined to be set.
+
+but sometimes we don’t really require writing all the seven routes so we can do this to avoid that
+
+```angular2html
+resources :posts, only: [:index, :show]
+resources :users, except: [:index]
+```
+
+we retrieve the url for a particular route we can do that using
+```angular2html
+link_to "Edit this post", edit_post_path(3) # don't hardcode 3
+```
